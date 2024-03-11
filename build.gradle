@@ -1,6 +1,8 @@
 buildscript {
     repositories {
-        jcenter()
+        ['thirdparty', 'central', 'releases', 'snapshots', 'gradlePlugins'].each { shortname ->
+            maven { url System.getenv('NEXUS_BASE_READ_URL') + "/repository/${shortname}" }
+        }
     }
     dependencies {
         classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3'
@@ -19,7 +21,9 @@ ext {
 
 allprojects {
     repositories {
-        jcenter()
+        ['thirdparty', 'central', 'releases', 'snapshots', 'gradlePlugins'].each { shortname ->
+            maven { url System.getenv('NEXUS_BASE_READ_URL') + "/repository/${shortname}" }
+        }
     }
 
     apply plugin: 'net.saliman.cobertura'
